@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head :: head">
+</head>
+<body>
+<div class="container">
+    <header th:replace="/fragment/bodyHeader :: bodyHeader"></header>
+    <article>
+        <form th:action="@{/book/modify}" th:object="${bookUpdateForm}" method="post">
+            <input type="hidden" th:value="*{bookId}" th:field="*{bookId}">
+            <div class="d-flex justify-content-between mb-2">
+                <div class="d-flex flex-column">
+                    <input readonly type="text" placeholder="닉네임" th:field="*{writerNick}" th:value="*{writerNick}"
+                           th:class="form-control">
+                    <input type="password" placeholder="암호" th:field="*{writerPassword}"
+                           th:class="form-control">
+                </div>
+                <textarea class="form-control" placeholder="내용" th:field="*{content}" th:text="*{content}"
+                          th:class="form-control"></textarea>
+                <input type="submit" value="수정" class="btn btn-primary">
+            </div>
+        </form>
+
+    </article>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head :: head">
+</head>
+<body>
+<div class="container">
+    <header th:replace="/fragment/bodyHeader :: bodyHeader"></header>
+    <article class="card">
+        <form th:action="@{/book/delete}" th:object="${bookUpdateForm}" method="post" class="card-body">
+            <input type="hidden" th:value="*{bookId}" th:field="*{bookId}">
+            <label th:for="*{writerPassword}"></label>
+            <input type="password" placeholder="암호" th:field="*{writerPassword}"
+                   th:class="form-control">
+            <input type="submit" value="삭제" class="btn btn-primary float-right">
+        </form>
+    </article>
+</div>
+</body>
+</html>

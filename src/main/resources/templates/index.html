@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/fragment/head :: head">
+</head>
+<body>
+<div class="container">
+    <header th:replace="/fragment/bodyHeader :: bodyHeader"></header>
+    <article>
+        <form th:action="@{/book/new}" th:object="${bookForm}" method="post">
+            <div class="d-flex justify-content-between mb-2">
+                <div class="d-flex flex-column">
+                    <input type="text" placeholder="닉네임" th:field="*{writerNick}"
+                           th:class="${#fields.hasErrors('writerNick')
+                           ? 'form-control field-err'
+                           : 'form-control'}">
+                    <input type="password" placeholder="암호" th:field="*{writerPassword}"
+                           th:class="${#fields.hasErrors('writerPassword')
+                           ? 'form-control field-err'
+                           : 'form-control'}">
+                </div>
+                <textarea class="form-control" placeholder="내용" th:field="*{content}"
+                          th:class="${#fields.hasErrors('content')
+                           ? 'form-control field-err'
+                           : 'form-control'}"></textarea>
+                <input type="submit" value="등록" class="btn btn-primary">
+            </div>
+            <p th:if="${#fields.hasAnyErrors()}">입력되지 않은 값이 있습니다.</p>
+        </form>
+        <form th:object="${bookSearch}" class="form-inline mt-3 mb-3">
+            <select th:field="*{searchType}" class="form-control">
+                <option
+                        th:each="type : ${T(simple.guestbook.domain.BookSearchType).values()}"
+                        th:value="${type}"
+                        th:text="${type.displayName}"
+                ></option>
+            </select>
+            <input type="search" class="form-control" th:field="*{searchText}">
+            <input type="submit" value="검색" class="btn btn-primary">
+        </form>
+        <ul th:each="book : ${books}">
+            <li>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 th:text="${book.writerNick}" class="d-inline mr-2"></h4>
+                        <span
+                                th:if="${book.modifyDate != null}"
+                                th:text="'(edited)' + ${#temporals.format(book.modifyDate, 'yyyy-MM-dd HH:mm')}">
+                        </span>
+                        <span
+                                th:if="${book.modifyDate == null}"
+                                th:text="${#temporals.format(book.writeDate, 'yyyy-MM-dd HH:mm')}">
+                        </span>
+                    </div>
+                    <div>
+                        <a th:href="@{'/book/' + ${book.id} +'/modify'}">수정</a>
+                        |
+                        <a th:href="@{'/book/' + ${book.id} + '/delete'}">삭제</a>
+                    </div>
+                </div>
+                <p th:utext="${book.content}">
+
+                </p>
+            </li>
+        </ul>
+    </article>
+</div>
+</body>
+</html>
