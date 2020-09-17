@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookRepository {
 
-    // JPA EntityMananger
+    // JPA EntityManager
     private final EntityManager em;
 
 
